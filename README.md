@@ -136,8 +136,8 @@ The ECM monitoring Docker image is bundled with an ECM product. You cannot run t
 ### Download the ECM product Docker image.
 
 ~~~
-docker login ecm-containerization-docker-local.artifactory.swg-devops.com
-docker pull ecm-containerization-docker-local.artifactory.swg-devops.com/cpe
+docker login  -u [Docker ID] -p [Password]
+docker pull ecmcontainers/ecm_earlyadopters_cpe:earlyadopters-gm5.5
 ~~~
 
 ### Enable the logging and monitoring service.
@@ -147,7 +147,7 @@ You can choose **any** one of the following methods.
 - Use IBM Bluemix logmet service with a Bluemix account: 
 
 ~~~
-docker run -d -e MON_METRICS_WRITER_OPTION=2 -e MON_METRICS_SERVICE_ENDPOINT=metrics.ng.bluemix.net:9095 -e MON_BMX_GROUP=com.ibm.ecm.monitor. -e MON_BMX_METRICS_SCOPE_ID={space or organization guid} -e MON_BMX_API_KEY={IAM API key} -e MON_LOG_SHIPPER_OPTION=2 -e MON_BMX_SPACE_ID={tenant id} -e MON_LOG_SERVICE_ENDPOINT=logs.opvis.bluemix.net:9091 -e MON_BMX_LOGS_LOGGING_TOKEN={log logging token} --hostname=cpe-logmet-test -p 9080:9080 -p 9443:9443 --name cpe -e CONTAINERTYPE=1 -e CPESTATICPORT=false -v /tmp/data/asa:/opt/ibm/asa -v /tmp/data/textext:/opt/ibm/textext -v /tmp/data/icmrules:/opt/ibm/icmrules -v /tmp/data/logs:/opt/ibm/wlp/usr/servers/defaultServer/logs -v /tmp/data/FileNet:/opt/ibm/wlp/usr/servers/defaultServer/FileNet -v /tmp/data/configDropins/overrides:/opt/ibm/wlp/usr/servers/defaultServer/configDropins/overrides -v /tmp/data/bootstrap:/opt/ibm/wlp/usr/servers/defaultServer/lib/bootstrap ecm-containerization-docker-local.artifactory.swg-devops.com/cpe:latest
+docker run -d -e MON_METRICS_WRITER_OPTION=2 -e MON_METRICS_SERVICE_ENDPOINT=metrics.ng.bluemix.net:9095 -e MON_BMX_GROUP=com.ibm.ecm.monitor. -e MON_BMX_METRICS_SCOPE_ID={space or organization guid} -e MON_BMX_API_KEY={IAM API key} -e MON_LOG_SHIPPER_OPTION=2 -e MON_BMX_SPACE_ID={tenant id} -e MON_LOG_SERVICE_ENDPOINT=logs.opvis.bluemix.net:9091 -e MON_BMX_LOGS_LOGGING_TOKEN={log logging token} --hostname=cpe-logmet-test -p 9080:9080 -p 9443:9443 --name cpe -e CONTAINERTYPE=1 -e CPESTATICPORT=false -v /tmp/data/asa:/opt/ibm/asa -v /tmp/data/textext:/opt/ibm/textext -v /tmp/data/icmrules:/opt/ibm/icmrules -v /tmp/data/logs:/opt/ibm/wlp/usr/servers/defaultServer/logs -v /tmp/data/FileNet:/opt/ibm/wlp/usr/servers/defaultServer/FileNet -v /tmp/data/configDropins/overrides:/opt/ibm/wlp/usr/servers/defaultServer/configDropins/overrides -v /tmp/data/bootstrap:/opt/ibm/wlp/usr/servers/defaultServer/lib/bootstrap ecmcontainers/ecm_earlyadopters_cpe:earlyadopters-gm5.5
 ~~~
 
 
@@ -156,7 +156,7 @@ docker run -d -e MON_METRICS_WRITER_OPTION=2 -e MON_METRICS_SERVICE_ENDPOINT=met
 This requires logstash.crt to configure for ELK server (Logstash). Place the certificate (logstash.crt) to the Docker host directory, such as /var/lib/ecm/logmet/certs/logstash.crt, and mount the directory /etc/pki/tls/certs/logstash.crt to a volume inside the container.
 
 ~~~
-docker run -d -e MON_METRICS_SERVICE_ENDPOINT="{your carbon service endpoint}" -e MON_LOG_SHIPPER_OPTION=1 -e MON_LOG_SERVICE_ENDPOINT="{your Logstash service endpoint}" -v /tmp/certs/{your Logstash server certificate file}:/etc/pki/tls/certs/logstash.crt:ro --hostname=cpe-logmet-test -p 9080:9080 -p 9443:9443 --name cpe -e CONTAINERTYPE=1 -e CPESTATICPORT=false -v /tmp/data/asa:/opt/ibm/asa -v /tmp/data/textext:/opt/ibm/textext -v /tmp/data/icmrules:/opt/ibm/icmrules -v /tmp/data/logs:/opt/ibm/wlp/usr/servers/defaultServer/logs -v /tmp/data/FileNet:/opt/ibm/wlp/usr/servers/defaultServer/FileNet -v /tmp/data/configDropins/overrides:/opt/ibm/wlp/usr/servers/defaultServer/configDropins/overrides -v /tmp/data/bootstrap:/opt/ibm/wlp/usr/servers/defaultServer/lib/bootstrap ecm-containerization-docker-local.artifactory.swg-devops.com/cpe:latest
+docker run -d -e MON_METRICS_SERVICE_ENDPOINT="{your carbon service endpoint}" -e MON_LOG_SHIPPER_OPTION=1 -e MON_LOG_SERVICE_ENDPOINT="{your Logstash service endpoint}" -v /tmp/certs/{your Logstash server certificate file}:/etc/pki/tls/certs/logstash.crt:ro --hostname=cpe-logmet-test -p 9080:9080 -p 9443:9443 --name cpe -e CONTAINERTYPE=1 -e CPESTATICPORT=false -v /tmp/data/asa:/opt/ibm/asa -v /tmp/data/textext:/opt/ibm/textext -v /tmp/data/icmrules:/opt/ibm/icmrules -v /tmp/data/logs:/opt/ibm/wlp/usr/servers/defaultServer/logs -v /tmp/data/FileNet:/opt/ibm/wlp/usr/servers/defaultServer/FileNet -v /tmp/data/configDropins/overrides:/opt/ibm/wlp/usr/servers/defaultServer/configDropins/overrides -v /tmp/data/bootstrap:/opt/ibm/wlp/usr/servers/defaultServer/lib/bootstrap ecmcontainers/ecm_earlyadopters_cpe:earlyadopters-gm5.5
 ~~~
 
 ## Customization
